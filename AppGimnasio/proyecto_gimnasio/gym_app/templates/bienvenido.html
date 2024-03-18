@@ -3,7 +3,7 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 
     <meta charset="UTF-8">
     <title>Bienvenido a la app del gimnasio</title>
@@ -13,7 +13,7 @@
 
 
 <nav class="navbar navbar-light bg-light">
-  <a class="navbar-brand" href="#">
+  <a class="navbar-brand" href="{% url 'index' %}">
   <img src="./static/images/boca.png"  width="30" height="30" alt="">
     App gimnasio boquita
   </a>
@@ -27,7 +27,7 @@
     <a class="nav-link active" href="nuevo_usuario">Nuevo usuario</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Link</a>
+    <a class="nav-link" href="{% url 'registros' %}">Usuarios</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#">Link</a>
@@ -38,103 +38,9 @@
 </nav>
 
 
-<style>
-    .search:focus{
-    background-color: #E8E8E8;
-    }
-
-    .result-card{
-    width: 50%;
-    max-height: 200px;
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,0.25);
-    transition: .5s;
-    border-radius: 7px;
-    padding: 15px 15px;
-    margin: auto;
-    }
-
-    .not-visible{
-    display: none;
-    }
-</style>
-
-
-
-
-<div class = "w-100 text-center">
-
- <form autocomplete="off" class="form-inline" id="search-form">
-   {% csrf_token %}
-    <input class="p-3 w-50 search mt-4" type="text" placeholder="Search" aria-label="Search" id="search-input">
-
- </form>
-
-    <!--Result card -->
-
-<div id="result-box" class="result-card not-visible">
-
-
-</div>
-
-</div>
-
-
-
-<script>
-    // Función para enviar los datos de búsqueda mediante AJAX
-    const sendSearchData = (usuarios) => {
-        // Obtener el token CSRF
-        const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
-
-        // Realizar una solicitud AJAX al servidor
-        $.ajax({
-            type: 'POST', // Tipo de solicitud POST
-            url: '{% url "search" %}', // URL de la vista de búsqueda en Django
-            data: {
-                'csrfmiddlewaretoken': csrfToken, // Token CSRF para seguridad
-                'usuarios': usuarios, // Datos de búsqueda
-            },
-            success: (res) => { // Función para manejar la respuesta exitosa
-                console.log(res); // Imprimir la respuesta en la consola (puedes modificar esto según tus necesidades)
-                // Actualizar el contenido de la caja de resultados con la respuesta recibida
-                $('#result-box').html(res.data); // Aquí asumo que 'res.data' contiene el HTML con los resultados de la búsqueda
-            },
-            error: (err) => { // Función para manejar errores en la solicitud AJAX
-                console.log(err); // Imprimir el error en la consola (puedes modificar esto según tus necesidades)
-            }
-        });
-    }
-
-    // Obtener el formulario de búsqueda
-    const searchForm = document.getElementById('search-form');
-
-    // Obtener el campo de búsqueda
-    const searchInput = document.getElementById('search-input');
-
-    // Obtener la caja de resultados
-    const resultBox = document.getElementById('result-box');
-
-    // Escuchar el evento 'keyup' en el campo de búsqueda
-    searchInput.addEventListener('keyup', e => {
-        // Mostrar el valor del campo de búsqueda en la consola (puedes eliminar esto si no lo necesitas)
-        console.log(e.target.value);
-
-        // Si la caja de resultados está oculta, mostrarla
-        if (resultBox.classList.contains('not-visible')) {
-            resultBox.classList.remove('not-visible');
-        }
-
-        // Enviar los datos de búsqueda actualizados mediante la función 'sendSearchData'
-        sendSearchData(e.target.value);
-    });
-</script>
-
-
-</script>
-
-
-
 </body>
+
+ <script src="https://unpkg.com/htmx.org@1.9.11"></script>
 </html>
 
 

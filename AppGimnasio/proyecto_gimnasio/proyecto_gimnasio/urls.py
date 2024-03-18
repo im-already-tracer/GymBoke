@@ -17,13 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from gym_app.views import bienvenido, nuevoUsuario, search_result
+from gym_app.views import bienvenido, nuevoUsuario, detalle_usuarios
 
 urlpatterns = [
+    path('/usuarios', detalle_usuarios, name = 'registros'),
     path('admin/', admin.site.urls),
     path('',bienvenido, name = 'index'),
-    path('nuevo_usuario', nuevoUsuario),
-    path('search/', search_result, name= 'search')
+    path('nuevo_usuario', nuevoUsuario)
 
 ]
 
